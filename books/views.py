@@ -50,6 +50,10 @@ class BookCreateView(LoginRequiredMixin, generic.CreateView):
     fields = ['title', 'author', 'description', 'price', 'cover',]
     template_name = 'books/book_create.html'
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 
 class BookUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = Book
